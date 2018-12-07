@@ -1,186 +1,260 @@
-# vue-html-editor
+# 简介 Intro 
 
-[![Build Status](https://circleci.com/gh/Haixing-Hu/vue-html-editor/tree/master.svg?style=shield)](https://circleci.com/gh/Haixing-Hu/vue-html-editor/tree/master)
-[![Coverage Status](https://coveralls.io/repos/Haixing-Hu/vue-html-editor/badge.svg?branch=master&service=github)](https://coveralls.io/github/Haixing-Hu/vue-html-editor?branch=master)
-[![bitHound Score](https://www.bithound.io/github/Haixing-Hu/vue-html-editor/badges/score.svg)](https://www.bithound.io/github/Haixing-Hu/vue-html-editor)
-[![Dependency Status](https://david-dm.org/Haixing-Hu/vue-html-editor.svg)](https://david-dm.org/Haixing-Hu/vue-html-editor)
-[![devDependency Status](https://david-dm.org/Haixing-Hu/vue-html-editor/dev-status.svg)](https://david-dm.org/Haixing-Hu/vue-html-editor#info=devDependencies)
+Vue-html5-editor是一个Vue的富文本编辑器插件，简洁灵活可扩展，适用于vue2.0以上版本，支持IE11.
 
-A Vue.js component implementing the HTML editor with the [jQuery summernote plugin](https://github.com/summernote/summernote).
+Vue-html5-editor is an html5 wysiwyg editor for vue,easy and flexible,compatible with Vue.js 2.0+,support IE11.
 
-# Demo
+![screenshot](http://tai.coding.me/vue-html5-editor/editor.png?v=20160912)
 
-The demo page is [HERE](http://haixing-hu.github.io/vue-html-editor/demo.html).
+[点击查看演示效果 Demo is here](http://tai.coding.me/vue-html5-editor)
 
-![Screenshot](screenshot.png)
+# 安装 Installation
 
-# Requirements
+### Npm
 
-- [Vue.js](https://github.com/yyx990803/vue) `^1.0.24`
-- [Summernote](https://github.com/summernote/summernote) `^0.8.1`
 
-# Instllation
-
-## npm
-
-```shell
-$ npm install vue-html-editor
+```bash
+npm install vue-html5-editor --save-dev
 ```
 
-## bower
+引入并安装作为全局组件
 
-```shell
-$ bower install vue-html-editor
+import and install as global component
+
+```js
+import Vue from 'vue'
+import VueHtml5Editor from 'vue-html5-editor'
+Vue.use(VueHtml5Editor,options);
 ```
 
-# Usage
+同样你也可以作为局部组件使用，方便在不同的场景里使用不同的配置.
 
-The HTML snippets are as follows:
+```js
+const editor1 = new VueHtml5Editor(options1)
+const app1 = new Vue({
+    components:{
+        editor1
+    }
+})
+const editor2 = new VueHtml5Editor(options2)
+const app2 = new Vue({
+    components:{
+        editor2
+    }
+})
+```
+
+
+### 浏览器直接使用 browser
 
 ```html
-<div class="container" id="app">
-  <vue-html-editor name="html-editor" :model.sync="text"></vue-html-editor>
-  <div style="margin-top:40px">
-    <div> The HTML contents are as follows:</div>
-    <hr>
-    <div >{{{text}}}</div>
-  </div>
-</div>
+<script src="serverpath/vue.js"></script>
+<script src="serverpath/vue-html5-editor.js"></script>
+```
+通过全局变量`VueHtml5Editor`来安装.
+
+Install using global variable `VueHtml5Editor`.
+```js
+Vue.use(VueHtml5Editor, options)
 ```
 
-The Javascript snippets are as follows:
 
-```javascript
-var Vue = require("vue");
+# 使用说明 Usage
 
-var vm = new Vue({
-  el: "#app",
-  components: {
-    "vue-html-editor": require("vue-html-editor")
-  },
-  data: {
-    text: "Hello World!"
-  }
-});
+模板代码如下：
+
+template code as follows:
+
+```html
+<vue-html5-editor :content="content" :height="500"></vue-html5-editor>
 ```
 
-# Component Properties
+# options
 
-## `model`
-
-The model bind to the control, which must be a two way binding variable.
-
-Note that the value of model could be set to `null`, and in that case the
-text content of the editor will be set to an empty string. While, if the text
-content of the editor is set to empty, the value of the model will be set to
-`null` instead of an empty string.
-
-## `language`
-
-The optional code of language used by the summernote plugin. Default value is `'en-US'`.
-Note that the language code passed to this property must be a language code together
-with a country code. This limitation is due to names of the i18n localizaiton files
-of the summernote plugin.
-
-## `height`
-
-The optional height of the HTML editor, in pixels. Default value is 160.
-
-## `minHeight`
-
-The optional minimum height of the HTML editor, in pixels. Default value is 160.
-
-## `maxHeight`
-
-The optional maximum height of the HTML editor, in pixels. Default value is 800.
-
-## `name`
-
-The optional name of the textarea control.
-
-## `toolbar`
-
-The optional configuration of toolbar of the HTML editor. This value will be
-passed to the constructor of the summernote directly. Default value is as
-follows
-
+```js
+Vue.use(VueHtml5Editor, {
+    // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效 
+    // global component name
+    name: "vue-html5-editor",
+    // 是否显示模块名称，开启的话会在工具栏的图标后台直接显示名称
+    // if set true,will append module name to toolbar after icon
+    showModuleName: false,
+    // 自定义各个图标的class，默认使用的是font-awesome提供的图标
+    // custom icon class of built-in modules,default using font-awesome
+    icons: {
+        text: "fa fa-pencil",
+        color: "fa fa-paint-brush",
+        font: "fa fa-font",
+        align: "fa fa-align-justify",
+        list: "fa fa-list",
+        link: "fa fa-chain",
+        unlink: "fa fa-chain-broken",
+        tabulation: "fa fa-table",
+        image: "fa fa-file-image-o",
+        hr: "fa fa-minus",
+        eraser: "fa fa-eraser",
+        undo: "fa-undo fa",
+        "full-screen": "fa fa-arrows-alt",
+        info: "fa fa-info",
+    },
+    // 配置图片模块
+    // config image module
+    image: {
+        // 文件最大体积，单位字节  max file size
+        sizeLimit: 512 * 1024,
+        // 上传参数,默认把图片转为base64而不上传
+        // upload config,default null and convert image to base64
+        upload: {
+            url: null,
+            headers: {},
+            params: {},
+            fieldName: {}
+        },
+        // 压缩参数,默认使用localResizeIMG进行压缩,设置为null禁止压缩
+        // compression config,default resize image by localResizeIMG (https://github.com/think2011/localResizeIMG)
+        // set null to disable compression
+        compress: {
+            width: 1600,
+            height: 1600,
+            quality: 80
+        },
+        // 响应数据处理,最终返回图片链接
+        // handle response data，return image url
+        uploadHandler(responseText){
+            //default accept json data like  {ok:false,msg:"unexpected"} or {ok:true,data:"image url"}
+            var json = JSON.parse(responseText)
+            if (!json.ok) {
+                alert(json.msg)
+            } else {
+                return json.data
+            }
+        }
+    },
+    // 语言，内建的有英文（en-us）和中文（zh-cn）
+    //default en-us, en-us and zh-cn are built-in
+    language: "zh-cn",
+    // 自定义语言
+    i18n: {
+        //specify your language here
+        "zh-cn": {
+            "align": "对齐方式",
+            "image": "图片",
+            "list": "列表",
+            "link": "链接",
+            "unlink": "去除链接",
+            "table": "表格",
+            "font": "文字",
+            "full screen": "全屏",
+            "text": "排版",
+            "eraser": "格式清除",
+            "info": "关于",
+            "color": "颜色",
+            "please enter a url": "请输入地址",
+            "create link": "创建链接",
+            "bold": "加粗",
+            "italic": "倾斜",
+            "underline": "下划线",
+            "strike through": "删除线",
+            "subscript": "上标",
+            "superscript": "下标",
+            "heading": "标题",
+            "font name": "字体",
+            "font size": "文字大小",
+            "left justify": "左对齐",
+            "center justify": "居中",
+            "right justify": "右对齐",
+            "ordered list": "有序列表",
+            "unordered list": "无序列表",
+            "fore color": "前景色",
+            "background color": "背景色",
+            "row count": "行数",
+            "column count": "列数",
+            "save": "确定",
+            "upload": "上传",
+            "progress": "进度",
+            "unknown": "未知",
+            "please wait": "请稍等",
+            "error": "错误",
+            "abort": "中断",
+            "reset": "重置"
+        }
+    },
+    // 隐藏不想要显示出来的模块
+    // the modules you don't want
+    hiddenModules: [],
+    // 自定义要显示的模块，并控制顺序
+    // keep only the modules you want and customize the order.
+    // can be used with hiddenModules together
+    visibleModules: [
+        "text",
+        "color",
+        "font",
+        "align",
+        "list",
+        "link",
+        "unlink",
+        "tabulation",
+        "image",
+        "hr",
+        "eraser",
+        "undo",
+        "full-screen",
+        "info",
+    ],
+    // 扩展模块，具体可以参考examples或查看源码
+    // extended modules
+    modules: {
+        //omit,reference to source code of build-in modules
+    }
+})
 ```
-[
-  ["font", ["bold", "italic", "underline", "clear"]],
-  ["fontsize", ["fontsize"]],
-  ["para", ["ul", "ol", "paragraph"]],
-  ["color", ["color"]],
-  ["insert", ["link", "picture", "hr"]]
-]
+
+# 组件属性 attributes
+
+```html
+<editor :content="content" :height="500" :z-index="1000" :auto-height="true" :show-module-name="false"></editor>
 ```
 
-# API
+### content
 
-## `control`
+编辑内容
 
-This property is a reference to the JQuery selection of the base texearea
-control. It could be used to call the APIs of summernote. For example,
-`editor.control.code(val)` will set the HTML content of the editor to the
-specified value, where `editor` is the reference to the `vue-html-editor`
-component.
+The html content to edit
 
-# Contributing
+### height
 
-- Fork it !
-- Create your top branch from `dev`: `git branch my-new-topic origin/dev`
-- Commit your changes: `git commit -am 'Add some topic'`
-- Push to the branch: `git push origin my-new-topic`
-- Submit a pull request to `dev` branch of `Haixing-Hu/vue-html-editor` repository !
+编辑器高度，如果设置了`auto-height`为true，将设置为编辑器的最小高度.
 
-# Building and Testing
+The height or min-height ( if auto-height is true ) of editor.
 
-First you should install all depended NPM packages. The NPM packages are used
-for building and testing this package.
+### z-index
 
-```shell
-$ npm install
+层级，将会设置编辑器容量的`z-index`样式属性,默认为1000.
+
+Sets z-index style property of editor,default 1000.
+
+### auto-height
+
+是否自动根据内容控制编辑器高度,默认为true.
+
+Resize editor height automatically,default true.
+
+### show-module-name
+
+局部设置是否显示模块名称，会覆盖全局的设定.
+
+Set `showModuleName` locally.
+
+# 事件
+```html
+<editor @change="updateData"></editor>
 ```
 
-Then install all depended bower packages. The bower packages are depended by
-this packages.
+### change
 
-```shell
-$ bower install
-```
+每次内容有变动时触发,回传改变后的内容.
 
-Now you can build the project.
-```shell
-$ gulp build
-```
-
-The following command will test the project.
-```shell
-$ gulp test
-```
-
-The following command will perform the test and generate a coverage report.
-```shell
-$ gulp test:coverage
-```
-
-The following command will perform the test, generate a coverage report, and
-upload the coverage report to [coveralls.io](https://coveralls.io/).
-```shell
-$ gulp test:coveralls
-```
-
-You can also run `bower install` and `gulp build` together with the following
-command:
-```shell
-npm run build
-```
-
-Or run `bower install` and `gulp test:coveralls` together with the following
-command:
-```shell
-npm run test
-```
+Emited when the content changes,and pass the current content as event data.
 
 # License
-
-[The MIT License](http://opensource.org/licenses/MIT)
+[Apache-2.0](http://opensource.org/licenses/Apache-2.0)
