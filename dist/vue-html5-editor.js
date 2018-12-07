@@ -1253,7 +1253,7 @@ var editor = {
         var content = this.$refs.content;
         content.innerHTML = this.content;
         content.addEventListener('mouseup', this.saveCurrentRange, false);
-        content.addEventListener('keyup', function () {
+        content.addEventListener('input', function () {
             this$1.$emit('change', content.innerHTML);
             this$1.saveCurrentRange();
         }, false);
